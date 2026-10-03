@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>There is an envelope by Kishan 💌</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #ffd6e7, #fff0f5, #ffc4d8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .container {
+      text-align: center;
+      z-index: 10;
+      position: relative;
+    }
+
+    .title {
+      color: #8b2148;
+      font-size: clamp(24px, 5vw, 38px);
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+
+    .instruction {
+      color: #9b3158;
+      margin-top: 25px;
+      font-size: 18px;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* Envelope */
+    .envelope-wrapper {
+      width: 280px;
+      height: 190px;
+      position: relative;
+      margin: auto;
+      cursor: pointer;
+      perspective: 1000px;
+    }
+
+    .envelope {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      background: #f7a9c4;
+      border-radius: 8px;
+      box-shadow: 0 15px 35px rgba(130, 30, 70, 0.25);
+    }
+
+    /* Front pocket */
+    .front {
+      position: absolute;
+      inset: 0;
+      background: #f28db1;
+      clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
+      z-index: 4;
+      border-radius: 8px;
+    }
+
+    /* Flap */
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffb6ce;
+      clip-path: polygon(0 0, 100% 0, 50% 58%);
+      transform-origin: top center;
+      transition: transform 1s ease;
+      z-index: 5;
+    }
+
+    .letter {
+      position: absolute;
+      width: 90%;
+      height: 150px;
+      left: 5%;
+      top: 20px;
+      background: white;
+      border-radius: 6px;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 1s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .letter span {
+      color: #c52f61;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .envelope-wrapper.open .flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    .envelope-wrapper.open .letter {
+      transform: translateY(-120px);
+      z-index: 6;
+    }
+
+    /* Message */
+    .message {
+      display: none;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      z-index: 20;
+      text-align: center;
+      animation: appear 1.5s ease forwards;
+    }
+
+    .message h1 {
+      font-family: cursive;
+      font-size: clamp(42px, 10vw, 75px);
+      color: #c52860;
+      text-shadow: 0 4px 15px rgba(150, 20, 70, 0.2);
+    }
+
+    .sad {
+      font-size: clamp(35px, 8vw, 55px);
+      margin-top: 15px;
+    }
+
+    .open .container {
+      display: none;
+    }
+
+    .open .message {
+      display: block;
+    }
+
+    /* Falling hearts */
+    .heart {
+      position: fixed;
+      top: -50px;
+      font-size: 25px;
+      pointer-events: none;
+      z-index: 2;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-50px) rotate(0deg);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0.8;
+      }
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -40%) scale(0.7);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0.6;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .envelope-wrapper {
+        width: 240px;
+        height: 165px;
+      }
+
+      .letter {
+        height: 130px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="title">
+      There is an envelope by Kishan 💌
+    </div>
+
+    <div class="envelope-wrapper" id="envelope">
+      <div class="envelope">
+
+        <div class="letter">
+          <span>💌</span>
+        </div>
+
+        <div class="front"></div>
+
+        <div class="flap"></div>
+
+      </div>
+    </div>
+
+    <div class="instruction">
+      Click the envelope to open 💗
+    </div>
+
+  </div>
+
+  <!-- Final Message -->
+  <div class="message">
+    <h1>SORRY KURKURI</h1>
+    <div class="sad">😓💔💔💔</div>
+  </div>
+
+
+  <script>
+
+    const envelope = document.getElementById("envelope");
+
+    envelope.addEventListener("click", function () {
+
+      envelope.classList.add("open");
+
+      setTimeout(() => {
+        document.body.classList.add("open");
+      }, 1000);
+
+      startHearts();
+
+    });
+
+
+    function startHearts() {
+
+      setInterval(() => {
+
+        const heart = document.createElement("div");
+
+        heart.classList.add("heart");
+
+        const hearts = ["❤️", "💗", "💖", "💕", "💔"];
+
+        heart.innerHTML =
+          hearts[Math.floor(Math.random() * hearts.length)];
+
+        heart.style.left =
+          Math.random() * 100 + "vw";
+
+        heart.style.fontSize =
+          (15 + Math.random() * 30) + "px";
+
+        heart.style.animationDuration =
+          (3 + Math.random() * 5) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 9000);
+
+      }, 250);
+
+    }
+
+  </script>
+
+</body>
+</html>
